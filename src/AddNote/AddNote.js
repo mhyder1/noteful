@@ -38,7 +38,7 @@ class AddNote extends React.Component {
         event.preventDefault();
         const {name, content, folderId} = this.state;
     
-        console.log('handle submit variables',name, content, folderId);
+        console.log('handle submit variables', name, content, folderId);
         let options = {
             method: 'POST', 
             body: JSON.stringify({name: name.value, content , folderId}),
@@ -67,7 +67,6 @@ class AddNote extends React.Component {
             return <option key={item.id} value={item.id}>{item.name}</option>
         })
     
-        console.log(folders)
 
         return (
             <form className="addnote" onSubmit={e => this.handleSubmit(e)}>
@@ -84,7 +83,7 @@ class AddNote extends React.Component {
                         name="content" id="content" onChange={e => this.updateContent(e.target.value)}/>
 
                     <label htmlFor="folder">Select Folder *</label>
-                    <select onClick={e => this.handleDropdownClick(e.target.value)}>
+                    <select onChange={e => this.handleDropdownClick(e.target.value)}>
                         {dropdownItems} 
                     </select>
     

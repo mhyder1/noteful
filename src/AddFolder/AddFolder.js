@@ -31,10 +31,13 @@ class AddFolder extends React.Component {
             headers: { 'Content-Type': 'application/json'}
         }
         fetch(`${config.API_ENDPOINT}/folders`, options) 
-    }
+            .then(res => res.json())
+            .then((result) => {
+                console.log(result)
 
-    // have a callback request that comes from App. this.props.addfolder 
-    // this set state adds to list of folder push name onto folder array.
+            })
+        
+    }
 
     validateName() {
         const name = this.state.name.value.trim();
@@ -72,7 +75,7 @@ class AddFolder extends React.Component {
     }
 }
 
-NewFolder.propTypes = {
+AddFolder.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     touched: PropTypes.boolean
