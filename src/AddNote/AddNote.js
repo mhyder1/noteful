@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom'
 import ValidationError from '../AddNote/ValidationError';
 import { runInNewContext } from 'vm';
 import config from '../config';
 import NoteError from '../NoteError';
 import PropTypes from 'prop-types';
-import ApiContext from '../ApiContext'
+import ApiContext from '../ApiContext';
 
 class AddNote extends React.Component {
     constructor(props) {
@@ -15,8 +16,8 @@ class AddNote extends React.Component {
             value: '',
             touched: false
           },
-          folderId: '',
-          content: ''
+          content: '',
+          folderId: ''
         }
     } 
     static contextType = ApiContext
@@ -31,20 +32,23 @@ class AddNote extends React.Component {
 
     handleDropdownClick(folderId) { 
         console.log(folderId)
-        this.setState({folderId});
+        this.setState({folderId: folderId});
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const {name, content, folderId} = this.state;
+        const {name, folderId, content} = this.state;
     
-        console.log('handle submit variables', name, content, folderId);
+        console.log('handle submit variables name', name );
+        console.log('handle submit variables folderId',folderId ); 
+        console.log('handle submit variables content',content );
+
         let options = {
             method: 'POST', 
-            body: JSON.stringify({name: name.value, content , folderId}),
+            body: JSON.stringify({name: name.value, folderid: folderId, content}),
             headers: { 'Content-Type': 'application/json'}
         }
-        fetch(`${config.API_ENDPOINT}/notes`, options) 
+        fetch(`${config.API_ENDPOINT}/note`, options) 
             .then(res => res.json())
             .then((result) => {
                 console.log(result)
@@ -84,6 +88,7 @@ class AddNote extends React.Component {
 
                     <label htmlFor="folder">Select Folder *</label>
                     <select onChange={e => this.handleDropdownClick(e.target.value)}>
+                        <option/>
                         {dropdownItems} 
                     </select>
     
@@ -91,12 +96,16 @@ class AddNote extends React.Component {
     
                 <div className="addfolder__button__group">
                 <button 
+                    tag={Link}
+                    to='/'
                     type="reset" 
                     className="addnote__button">
                     Cancel
                 </button>
                 <NoteError>
                     <button 
+                        tag={Link}
+                        to='/'
                         type="submit" 
                         className="addnote__button"
                         disabled={this.validateName()}>
@@ -112,7 +121,6 @@ class AddNote extends React.Component {
 AddNote.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
-    //touched: PropTypes.boolean
 };
 
 export default AddNote;

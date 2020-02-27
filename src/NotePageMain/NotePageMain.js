@@ -13,8 +13,10 @@ export default class NotePageMain extends React.Component {
   static contextType = ApiContext
 
   handleDeleteNote = noteId => {
-    this.props.history.push(`/`)
-  }
+    this.setState({
+        notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+};
 
   render() {
     const { notes=[] } = this.context
