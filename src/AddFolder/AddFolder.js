@@ -34,7 +34,7 @@ class AddFolder extends React.Component {
             .then(res => res.json())
             .then((result) => {
                 console.log(result)
-
+            this.props.routeProps.history.push('/')
             })
         
     }
@@ -66,7 +66,7 @@ class AddFolder extends React.Component {
                 <button type="reset" className="addfolder__button">
                     Cancel
                 </button>
-                <button type="submit" className="addfolder__button">
+                <button type="submit" className="addfolder__button" disabled={this.validateName()}>
                     Save
                 </button>
                 </div>

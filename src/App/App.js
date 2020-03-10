@@ -5,6 +5,7 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
+import Note from '../Note/Note';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import AddFolder from '../AddFolder/AddFolder';
@@ -62,10 +63,11 @@ class App extends Component {
                         component={NoteListNav}
                     />
                 ))}
-                <Route path="/note/:noteId" component={NotePageNav} />
-                <Route path="/add-folder" component={AddFolder} />
+                <Route path="/note/:noteId" component={NotePageNav}  />
+                <Route path="/add-folder" render={(props) => {
+                    return (<AddFolder folders={this.state.folders} routeProps={props} />)}} />
                 <Route path="/add-note" render={(props) => { 
-                    return ( <AddNote folders={this.state.folders} /> )}}  />
+                    return ( <AddNote folders={this.state.folders} routeProps={props}/> )}}  />
             </>
         );
     }

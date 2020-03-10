@@ -38,21 +38,25 @@ class AddNote extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const {name, folderId, content} = this.state;
+        const folderIdInt = parseInt(folderId);
+        
     
         console.log('handle submit variables name', name );
-        console.log('handle submit variables folderId',folderId ); 
-        console.log('handle submit variables content',content );
+        console.log('handle submit variables folderId', folderId ); 
+        console.log('handle submit variables content', content );
 
         let options = {
             method: 'POST', 
-            body: JSON.stringify({name: name.value, folderid: folderId, content}),
+            body: JSON.stringify({name: name.value, folderid: folderIdInt, content}),
             headers: { 'Content-Type': 'application/json'}
         }
         fetch(`${config.API_ENDPOINT}/note`, options) 
             .then(res => res.json())
             .then((result) => {
-                console.log(result)
-
+            this.props.routeProps.history.push('/')
+            console.log(result)
+            console.log(folderId)
+            
             })
     }
 
@@ -65,11 +69,20 @@ class AddNote extends React.Component {
         }
     }
 
+    validateFolder() {
+        const folder = this.state.folderID.trim();
+        if (folder.length === 0) {
+          return "Folder is required";
+        }
+    }
+
     render() { 
         const {folders} = this.props
         const dropdownItems = folders.map(item => { 
             return <option key={item.id} value={item.id}>{item.name}</option>
         })
+        
+
     
 
         return (
@@ -120,7 +133,8 @@ class AddNote extends React.Component {
 
 AddNote.propTypes = {
     name: PropTypes.string,
-    value: PropTypes.string,
+    content: PropTypes.string,
+    folderid: PropTypes.number,
 };
 
 export default AddNote;
