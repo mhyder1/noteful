@@ -5,7 +5,6 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
-import Note from '../Note/Note';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import AddFolder from '../AddFolder/AddFolder';
@@ -45,9 +44,15 @@ class App extends Component {
         });
     };
 
-    handleAddNote = note => {
+    addNote = note => {
         this.setState({
-            notes: [this.state.notes, note]
+            notes: [...this.state.notes, note]
+        })
+    }
+
+    addFolder = (folder) => {
+        this.setState({
+            folders: [...this.state.folders, folder]
         })
     }
 
@@ -93,7 +98,8 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             deleteNote: this.handleDeleteNote,
-            addNote: this.handleAddNote
+            addNote: this.handleAddNote,
+            addFolder: this.handleAddFolder
         };
         return (
             <ApiContext.Provider value={value}>

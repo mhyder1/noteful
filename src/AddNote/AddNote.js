@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom'
 import ValidationError from '../AddNote/ValidationError';
-import { runInNewContext } from 'vm';
 import config from '../config';
 import NoteError from '../NoteError';
 import PropTypes from 'prop-types';

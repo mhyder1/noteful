@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import config from '../config';
 import PropTypes from 'prop-types';
 
@@ -34,6 +33,7 @@ class AddFolder extends React.Component {
             .then(res => res.json())
             .then((result) => {
                 console.log(result)
+            //this.context.addFolder(name)
             this.props.routeProps.history.push('/')
             })
         
@@ -49,7 +49,6 @@ class AddFolder extends React.Component {
     }
 
     render() {
-        const nameError = this.validateName();
         
         return (
             <form className="registration" onSubmit={e => this.handleSubmit(e)}>
