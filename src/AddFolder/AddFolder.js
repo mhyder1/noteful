@@ -1,6 +1,8 @@
 import React from 'react';
 import config from '../config';
 import PropTypes from 'prop-types';
+import ApiContext from '../ApiContext';
+
 
 
 
@@ -14,6 +16,19 @@ class AddFolder extends React.Component {
           }
         }
     } 
+
+    static defaultProps = {
+        history: {
+          push: () => { }
+        },
+    }
+
+    static contextType = ApiContext
+    addFolder = (folder) => {
+        this.setState({
+            folders: [...this.state.folders, folder]
+        })
+    }
 
     updateName(name) {
         this.setState({name: {value: name, touched: true}});
@@ -30,11 +45,14 @@ class AddFolder extends React.Component {
             headers: { 'Content-Type': 'application/json'}
         }
         fetch(`${config.API_ENDPOINT}/folder`, options) 
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result)
-            //this.context.addFolder(name)
-            this.props.routeProps.history.push('/')
+            .then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(folder => {
+                this.context.addFolder(folder)
+                this.props.history.push(`/folder/${folder.id}`)
             })
         
     }

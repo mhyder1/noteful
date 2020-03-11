@@ -18,7 +18,20 @@ class AddNote extends React.Component {
           folderId: ''
         }
     } 
+
+    static defaultProps = {
+        history: {
+          push: () => { }
+        },
+    }
+
     static contextType = ApiContext
+
+    addNote = note => {
+        this.setState({
+            notes: [...this.state.notes, note]
+        })
+    }
 
     updateName(name) {
         this.setState({name: {value: name, touched: true}});
@@ -36,7 +49,7 @@ class AddNote extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const {name, folderId, content} = this.state;
-        const folderIdInt = parseInt(folderId);
+
         
     
         console.log('handle submit variables name', name );
@@ -45,16 +58,18 @@ class AddNote extends React.Component {
 
         let options = {
             method: 'POST', 
-            body: JSON.stringify({name: name.value, folderid: folderIdInt, content}),
+            body: JSON.stringify({name: name.value, folderid: folderId, content}),
             headers: { 'Content-Type': 'application/json'}
         }
         fetch(`${config.API_ENDPOINT}/note`, options) 
-            .then(res => res.json())
-            .then((result) => {
-            this.props.routeProps.history.push('/')
-            console.log(result)
-            console.log(folderId)
-            
+            .then(res => {
+                if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(note => {
+                this.context.addNote(note)
+                this.props.history.push(`/folder/${note.folderId}`)
             })
     }
 
