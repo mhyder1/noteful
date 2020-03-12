@@ -42,15 +42,12 @@ class AddNote extends React.Component {
     }
 
     handleDropdownClick(folderId) { 
-        console.log(folderId)
         this.setState({folderId: folderId});
     }
 
     handleSubmit(event) {
         event.preventDefault();
         const {name, folderId, content} = this.state;
-
-        
     
         console.log('handle submit variables name', name );
         console.log('handle submit variables folderId', folderId ); 
