@@ -70,9 +70,9 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageNav}  />
                 <Route path="/add-folder" render={(props) => {
-                    return (<AddFolder folders={this.state.folders} routeProps={props} />)}} />
+                    return (<AddFolder folders={this.state.folders} {...props} />)}} />
                 <Route path="/add-note" render={(props) => { 
-                    return ( <AddNote folders={this.state.folders} routeProps={props}/> )}}  />
+                    return ( <AddNote folders={this.state.folders} {...props}/> )}}  />
             </>
         );
     }

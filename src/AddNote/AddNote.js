@@ -48,10 +48,6 @@ class AddNote extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         const {name, folderId, content} = this.state;
-    
-        console.log('handle submit variables name', name );
-        console.log('handle submit variables folderId', folderId ); 
-        console.log('handle submit variables content', content );
 
         let options = {
             method: 'POST', 
@@ -66,7 +62,7 @@ class AddNote extends React.Component {
             })
             .then(note => {
                 this.context.addNote(note)
-                this.props.history.push(`/folder/${note.folderId}`)
+                this.props.history.push(`/folder/${note.folderid}`)
             })
     }
 
@@ -91,26 +87,23 @@ class AddNote extends React.Component {
         const dropdownItems = folders.map(item => { 
             return <option key={item.id} value={item.id}>{item.name}</option>
         })
-        
-
-    
 
         return (
             <form className="addnote" onSubmit={e => this.handleSubmit(e)}>
                 <h2>Add Note</h2>
-                <div className="addnote__hint">* required field</div>  
+                {/* <div className="addnote__hint">* required field</div>   */}
                 <div className="form-group">
-                    <label htmlFor="name">Name *</label>
-                    <input type="text" className="name__control"
+                    <label htmlFor="name">Name</label>{' '}
+                    <input type="text" className="name__control" required
                         name="name" id="name" onChange={e => this.updateName(e.target.value)}/>
-                    {this.state.name.touched && <ValidationError message={'There was an error'} />}
-
-                    <label htmlFor="content">Add Text *</label>
-                    <input type="text" className="name__control"
+                    {/* {this.state.name.touched && <ValidationError message={'There was an error'} />} */}
+                    <br />
+                    <label htmlFor="content">Add Text</label>{' '}
+                    <input type="text" className="name__control" required
                         name="content" id="content" onChange={e => this.updateContent(e.target.value)}/>
-
-                    <label htmlFor="folder">Select Folder *</label>
-                    <select onChange={e => this.handleDropdownClick(e.target.value)}>
+                    <br />
+                    <label htmlFor="folder">Select Folder</label>{' '}
+                    <select onChange={e => this.handleDropdownClick(e.target.value)} required>
                         <option/>
                         {dropdownItems} 
                     </select>

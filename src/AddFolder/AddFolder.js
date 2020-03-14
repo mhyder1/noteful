@@ -71,10 +71,10 @@ class AddFolder extends React.Component {
         return (
             <form className="registration" onSubmit={e => this.handleSubmit(e)}>
                 <h2>Add Folder</h2>
-                <div className="addfolder__hint">* required field</div>  
+                {/* <div className="addfolder__hint">* required field</div>   */}
                 <div className="form-group">
-                <label htmlFor="name">Name *</label>
-                <input type="text" className="name__control"
+                <label htmlFor="name">Name</label>{' '}
+                <input type="text" className="name__control" required
                     name="name" id="name" onChange={e => this.updateName(e.target.value)}/>
                 {this.state.name.touched}
                 </div>

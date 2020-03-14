@@ -15,11 +15,14 @@ export default class NoteListMain extends React.Component {
   }
   static contextType = ApiContext
 
+  handleDeleteNote = () => {
+    this.props.history.push('/')
+  };
+
   render() {
     const { notes=[] } = this.context
     const folderId = this.props.match.params.folderId
     const notesForFolder = getNotesForFolder(notes, folderId)
-    console.log(folderId)
     
     return (
       <section className='NoteListMain'>
@@ -30,6 +33,7 @@ export default class NoteListMain extends React.Component {
                 id={note.id}
                 name={note.name}
                 modified={note.modified}
+                onDeleteNote={this.handleDeleteNote}
               />
             </li>
           )}

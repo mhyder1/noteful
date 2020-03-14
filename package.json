@@ -14,7 +14,6 @@
     "react-scripts": "2.1.1",
     "typeface-roboto": "0.0.54"
   },
-
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -23,7 +22,6 @@
     "predeploy": "npm run build",
     "deploy": "now --prod ./build"
   },
-
   "eslintConfig": {
     "extends": "react-app"
   },
